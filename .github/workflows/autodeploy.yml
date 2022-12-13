@@ -18,11 +18,5 @@ jobs:
           restore-keys: ${{ runner.os }}-node-
       - run: pnpm ci # install dependencies
       - run: pnpm run build --if-present # build the project
-      # deploy site to netlify using secrets created on repository
-      - uses: netlify/actions/cli@master
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        with:
-          args: deploy --dir=dist --prod
-          secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
+      - run: ntl deploy --dir=build --site=${{ secrets.NETLIFY_SITE_ID }}
+
